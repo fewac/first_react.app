@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import Button from './Button'
+import Input from  './Input'
+import List from './List'
 
 class App extends Component {
 
@@ -21,7 +24,7 @@ class App extends Component {
   }
 
 
-  clickHandler = () => {
+  addItem = () => {
     let title = this.state.title;
     const list = this.state.list;
     title = title.trim();
@@ -44,7 +47,12 @@ class App extends Component {
       title: ''
     })
     
-// Otra forma de hacer es así: 
+    
+
+                 
+
+
+// Otra forma de hacer esto es así: 
 
     // if (title.length !== 0){
     //   list.push(title);
@@ -68,6 +76,18 @@ class App extends Component {
     // this.setState.list.push(elemento);
     // console.log(this.state.list);
   }
+
+
+
+  removeItem = index => {
+    console.log(index)
+    let list = this.state.list
+    list.splice(index, 1)
+    this.setState({
+      list
+    })
+  }
+
 
 
   render() {
@@ -96,19 +116,42 @@ class App extends Component {
               <div className="card-body">
                 <h1 className="card-title text-center"> To Do List</h1>
                   <div className="input-group mb-3"> 
+
+                      <Input
+                        value = { this.state.title}
+                        onChange = { (e) => this.inputHandler(e) }
+                        className = "form-control"
+                        type = "text"
+                      />
+                        
+                      
+
+                      {/*
                       <input 
                         className = "form-control" 
                         type = "text" 
-                        value = {this.state.title}
+                        value = { this.state.title} 
                         onChange = { (e) => this.inputHandler(e) }
                         />
+                      */}
+
 
                       {/* this.state.title */}
 
                       <br />
 
                       <div className="input-group-append">
-                        <button type="button" className="btn btn-primary" onClick={this.clickHandler}>Hola</button>
+
+                        {/*   Así se agrega un componente de React:  */}
+                        <Button
+                          className = "btn btn-primary"
+                          clickHandler = {this.addItem} 
+                        >
+                          Agregar
+                        </Button>
+
+                        { /*<button type="button" className="btn btn-primary" onClick={this.clickHandler}>Hola</button>*/}
+
                       </div>
                   </div>
               </div>
@@ -117,7 +160,10 @@ class App extends Component {
         </div>
         <div className="row justify-content-center">
           <div className="col">
-              {list}
+              <List
+                items = {this.state.list}
+                removeItem = {this.removeItem}
+              />
           </div>
         </div>
       </div>
