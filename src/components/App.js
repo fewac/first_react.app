@@ -17,7 +17,6 @@ class App extends Component {
 
   inputHandler = (e) => {
     //console.log(e.target.value);
-
     this.setState({
       title: e.target.value
     })
@@ -32,7 +31,11 @@ class App extends Component {
 
 
     if (title && title.length){
-      list.push(title);
+      list.push({
+        title, 
+        completed: false,
+        created: Date.now()
+      });
 
       this.setState({
         title: '',
@@ -77,7 +80,7 @@ class App extends Component {
     // console.log(this.state.list);
   }
 
-
+  
 
   removeItem = index => {
     console.log(index)
@@ -88,6 +91,15 @@ class App extends Component {
     })
   }
 
+ 
+
+  toggleCompleted = index => {
+    let list = this.state.list
+    list[index].completed = !list[index].completed
+    this.setState({
+      list
+    })
+  }
 
 
   render() {
@@ -163,6 +175,7 @@ class App extends Component {
               <List
                 items = {this.state.list}
                 removeItem = {this.removeItem}
+                toggleCompleted = {this.toggleCompleted}
               />
           </div>
         </div>
